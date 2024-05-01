@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>POW Reports - Results</title>
+    <style>
+        body {
+            font-family: Helvetica, sans-serif;
+            background-color: #ffffff;
+            margin: 50px auto; /* Center the content vertically and horizontally */
+            padding: 20px;
+            max-width: 1000px; /* Set maximum width for content */
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none; /* Remove bullet points from unordered list */
+            padding: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px; /* Add margin between list items */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Add margin at the top of the table */
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+        }
+
+        img.logo {
+            display: block; /* Ensure images are centered */
+            margin: 20 auto 20px; /* Center images horizontally and add margin at the bottom */
+            max-width: 200px; /* Adjust as needed */
+            max-height: 200px; /* Adjust as needed */
+        }
+
+        img.visualization {
+            display: block; /* Ensure images are centered */
+            margin: 20px auto; /* Center images horizontally and add margin at the top and bottom */
+            max-width: 90%; /* Ensure images don't exceed container width */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 600px; /* Set maximum height for the image */
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            border: 1px solid#ccc;
+            padding: 20px;
+        }
+
+        .container .table {
+            flex-basis: 30%; /* Adjust as needed */
+        }
+
+        .container .visualization {
+            flex-basis: 70%; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+  <div class="logo-container">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+  </div>
+  <h1>POW Reports - Results</h1>
+
+  <!-- Display the bar chart for Top 10 strains by amount sold -->
+  <div class="container">
+      <div class="table">
+          <h2>Top 10 Seller Strains</h2>
+          <table>
+              <tr>
+                  <th>Strain</th>
+                  <th>Units Sold</th>
+              </tr>
+              {% for strain, amount_sold in top_10_by_strain.iterrows() %}
+              <tr>
+                  <td>{{ strain }}</td>
+                  <td>{{ amount_sold['Amount Sold (Units)'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot1 }}" alt="Top 10 strains by amount sold" class="visualization">
+      </div>
+  </div>
+
+  <!-- Display the bar chart for Grouped by Device -->
+  <div class="container">
+      <div class="table">
+          <h2>Units Sold Per Device</h2>
+          <table>
+              <tr>
+                  <th>Device</th>
+                  <th>Units Sold</th>
+              </tr>
+              {% for device, amount_sold in grouped_by_device.iterrows() %}
+              <tr>
+                  <td>{{ device }}</td>
+                  <td>{{ amount_sold['Amount Sold (Units)'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot2 }}" alt="Unit Sold Per Device" class="visualization">
+      </div>
+  </div>
+
+  <!-- Display the bar chart for Grouped by Oil Category (where Oil Category != Live Rosin) -->
+  <div class="container">
+      <div class="table">
+          <h2>Units Sold Per Oil Category</h2>
+          <table>
+              <tr>
+                  <th>Oil Category</th>
+                  <th>Units Sold</th>
+              </tr>
+              {% for oil_category, amount_sold in grouped_by_oil_category.iterrows() %}
+              <tr>
+                  <td>{{ oil_category }}</td>
+                  <td>{{ amount_sold['Amount Sold (Units)'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot3 }}" alt="Unit Sold Per Oil Category (where Oil Category != Live Rosin)" class="visualization">
+      </div>
+  </div>
+
+  <!-- Display the bar chart for Pivot table Device vs Oil Category (exclude Badder and Live Rosin) -->
+  <div class="container">
+      <div class="table">
+          <h2>Units Sold Per Device and Oil Category</h2>
+          <table>
+              <tr>
+                  <th>Device</th>
+                  {% for oil_category in pivot_table_device_vs_oil.columns %}
+                  <th>{{ oil_category }}</th>
+                  {% endfor %}
+              </tr>
+              {% for device, amount_sold in pivot_table_device_vs_oil.iterrows() %}
+              <tr>
+                  <td>{{ device }}</td>
+                  {% for value in amount_sold %}
+                      <td>{{ value }}</td>
+                  {% endfor %}
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot4 }}" alt="Unit Sold Per Device vs Oil Category (exclude Badder and Live Rosin)" class="visualization">
+      </div>
+  </div>
+
+  <!-- Display the bar chart for Grouped by Weight (where Oil Category = Live Rosin) -->
+  <div class="container">
+      <div class="table">
+          <h2>Badder Units Sold Per Weight</h2>
+          <table>
+              <tr>
+                  <th>Weight</th>
+                  <th>Units Sold</th>
+              </tr>
+              {% for weight, amount_sold in grouped_by_weight_live_rosin.iterrows() %}
+              <tr>
+                  <td>{{ weight }}</td>
+                  <td>{{ amount_sold['Amount Sold (Units)'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot5 }}" alt="Unit Sold Per Weight (where Oil Category = Live Rosin)" class="visualization">
+      </div>
+  </div>
+
+  <!-- Display the bar chart for Grouped by Strain (where Device != Badder) -->
+  <div class="container">
+      <div class="table">
+          <h2>Units Sold Per Strain</h2>
+          <table>
+              <tr>
+                  <th>Strain</th>
+                  <th>Units Sold</th>
+              </tr>
+              {% for strain, amount_sold in grouped_by_strain.iterrows() %}
+              <tr>
+                  <td>{{ strain }}</td>
+                  <td>{{ amount_sold['Amount Sold (Units)'] }}</td>
+              </tr>
+              {% endfor %}
+          </table>
+      </div>
+      <div class="visualization">
+          <img src="{{ plot6 }}" alt="Unit Sold Per Strain (where Device != Badder)" class="visualization">
+      </div>
+  </div>
+  
+</body>
+</html>

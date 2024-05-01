@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>POW Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="logo-container">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+</div>
+<h1>POW Reports</h1>
+<div style="text-align: center">
+    <form method="post" action="/result" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv">
+        <button type="submit">Upload</button>
+    </form>
+</div>
+</body>
+</html>

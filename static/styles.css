@@ -1,0 +1,94 @@
+/* styles.css */
+
+body {
+    font-family: Helvetica, sans-serif;
+    background-color: #ffffff;
+    margin: 50px auto; /* Center the content vertically and horizontally */
+    padding: 20px;
+    max-width: 1000px; /* Set maximum width for content */
+}
+
+h1 {
+    text-align: center;
+    color: #231f20; /* Set text color */
+    font-size: 50px;
+}
+
+h2 {
+    text-align: center;
+    color: #231f20; /* Set text color */
+    font-size: 30px;
+}
+
+h3 {
+    text-align: center;
+    color: #231f20; /* Set text color */
+    font-size: 10px;
+}
+
+ul {
+    list-style-type: none; /* Remove bullet points from unordered list */
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px; /* Add margin between list items */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Add margin at the top of the table */
+    font-size: 12px; /* Reduce font size */
+}
+
+table, th, td {
+    border: 1px solid #231f20; /* Set border color */
+    padding: 8px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f2f2f2;
+}
+
+img.logo {
+    display: block; /* Ensure images are centered */
+    margin: 0 auto 20px; /* Center images horizontally and add margin at the bottom */
+    max-width: 200px; /* Adjust as needed */
+    max-height: 200px; /* Adjust as needed */
+}
+
+.logo-container {
+    text-align: center; /* Center the content horizontally */
+    margin-bottom: 20px; /* Add margin at the bottom of the logo container */
+}
+
+img.visualization {
+    display: block; /* Ensure images are centered */
+    margin: 0px auto; /* Center images horizontally and add margin at the top and bottom */
+    max-width: 90%; /* Ensure images don't exceed container width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Bar chart styles */
+.visualization {
+    background-color: #f2f2f2; /* Set background color */
+    padding: 0px; /* Add padding to the visualization container */
+}
+
+/* Change bar colors */
+.visualization img {
+    color: #44b314;
+    filter: brightness(90%);
+}
+
+/* Change bar text color */
+.visualization .ticks text {
+    fill: #231f20; /* Set text color */
+}
+
+/* Change axis line color */
+.visualization .domain {
+    stroke: #231f20; /* Set line color */
+}
