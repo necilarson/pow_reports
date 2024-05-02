@@ -24,9 +24,13 @@ def result():
     if file.filename == '':
         return 'Empty file'
 
-    # Read the CSV file
-    data = pd.read_csv(file)
-
+    # Use streaming to read the CSV file
+    # Create a file-like object from the uploaded file
+    file_stream = file.stream
+  
+    # Read the CSV file using pandas.read_csv() with the file-like object
+    data = pd.read_csv(file_stream)
+    
     # Data processing
     # Replace '0.' with '.'
     data['Product'] = data['Product'].str.replace('0\.', '.')
